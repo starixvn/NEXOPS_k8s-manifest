@@ -1,1 +1,31 @@
----
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: healthcheck-domain
+spec:
+  schedule: "*/30 * * * *"   #
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+            - name: healthcheck
+              image: hub.nexdev.net/base/cronjob-checkdomain
+              imagePullPolicy: Always
+              # env:
+              #   - name: SLACK_WEBHOOK_URL
+              #     valueFrom:
+              #       secretKeyRef:
+              #         name: slack-secret
+              #         key: webhook
+              volumeMounts:
+                - name: domain-config
+                  mountPath: /app/domains   
+          restartPolicy: Never
+          volumes:
+            - name: domain-config
+              configMap:
+                name: domain-lists        
