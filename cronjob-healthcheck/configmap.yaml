@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: domain-lists
+  namespace: nexops
 data:
   pioneers_pioneers-test.txt: |
     accounting-klp.starixplay.com
@@ -99,7 +100,6 @@ data:
     tvs-klp.starixplay.com
     vn-reward-wallet-api-klp.starixplay.com
     settle-setting.stag-kl.oneops.net
-    sentry.starixplay.com
   suba_suba-test.txt: |
     lm-klp.starixplay.com 
     oic-klp.starixplay.com 
